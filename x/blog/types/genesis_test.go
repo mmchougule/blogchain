@@ -19,12 +19,82 @@ func TestGenesisState_Validate(t *testing.T) {
 			valid:    true,
 		},
 		{
-			desc:     "valid genesis state",
+			desc: "valid genesis state",
 			genState: &types.GenesisState{
 
+				HelpList: []types.Help{
+					{
+						Id: 0,
+					},
+					{
+						Id: 1,
+					},
+				},
+				HelpCount: 2,
+				PostList: []types.Post{
+					{
+						Id: 0,
+					},
+					{
+						Id: 1,
+					},
+				},
+				PostCount: 2,
 				// this line is used by starport scaffolding # types/genesis/validField
 			},
 			valid: true,
+		},
+		{
+			desc: "duplicated help",
+			genState: &types.GenesisState{
+				HelpList: []types.Help{
+					{
+						Id: 0,
+					},
+					{
+						Id: 0,
+					},
+				},
+			},
+			valid: false,
+		},
+		{
+			desc: "invalid help count",
+			genState: &types.GenesisState{
+				HelpList: []types.Help{
+					{
+						Id: 1,
+					},
+				},
+				HelpCount: 0,
+			},
+			valid: false,
+		},
+		{
+			desc: "duplicated post",
+			genState: &types.GenesisState{
+				PostList: []types.Post{
+					{
+						Id: 0,
+					},
+					{
+						Id: 0,
+					},
+				},
+			},
+			valid: false,
+		},
+		{
+			desc: "invalid post count",
+			genState: &types.GenesisState{
+				PostList: []types.Post{
+					{
+						Id: 1,
+					},
+				},
+				PostCount: 0,
+			},
+			valid: false,
 		},
 		// this line is used by starport scaffolding # types/genesis/testcase
 	} {
